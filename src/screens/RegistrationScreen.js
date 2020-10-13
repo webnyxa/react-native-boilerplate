@@ -18,6 +18,7 @@ import {
 import Toast from 'react-native-simple-toast';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import service from '../service';
+import axios from 'axios';
 
 class RegistrationScreen extends Component {
   constructor(props) {
@@ -46,8 +47,8 @@ class RegistrationScreen extends Component {
         c_password: password,
       };
 
-      service
-        .post('register', params)
+      axios
+        .post('http://react-demo.webnyxa.com/api/register', params)
 
         .then((response) => {
           this.setState({loading: false});
@@ -61,8 +62,8 @@ class RegistrationScreen extends Component {
         })
         .catch((error) => {
           this.setState({loading: false});
-          console.log(error)
-         // Toast.show(error.data.errors.email[0], Toast.LONG);
+           console.log(error.response.data.errors.email[0])
+           Toast.show(error.response.data.errors.email[0], Toast.LONG);
         });
     }
   };
